@@ -1,30 +1,16 @@
-# JARVIS Core — Autonomous FinTech Analytics & AI Intelligence Platform
+# JARVIS Core — Автономна платформа кількісної аналітики та ризиків
 
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-[![Cloud](https://img.shields.io/badge/AWS-EC2%20%7C%20Bedrock-orange.svg)](https://aws.amazon.com/)
-[![Architecture](https://img.shields.io/badge/Architecture-Event--Driven-green.svg)]()
-[![Status](https://img.shields.io/badge/Status-In%20Active%20Development-blueviolet.svg)]()
+📌 Огляд
+JARVIS Core — це хмарна B2B платформа кількісної аналітики, розроблена для поєднання високопродуктивної ринкової телеметрії з генеративним штучним інтелектом. Побудована на основі асинхронної архітектури шини подій, платформа обробляє фінансові потоки в режимі реального часу, обчислює структурні індикатори та надає аудиторські звіти за допомогою інтегрованих LLM.
 
-## 📌 Overview
+🏗️ Архітектура та інфраструктура AWS
+Платформа розроблена відповідно до AWS Well-Architected Framework для розгортання в екосистемі Amazon Web Services:
+- Обчислення та механізм: Розміщено на AWS EC2 для потокової обробки даних із низькою затримкою та роботи асинхронного ядра.
+- AI-Оркестрація та LLM: Працює на базі Amazon Bedrock (Claude 3.5 Sonnet) для інтелектуального синтезу макроданих та автоматизованої оцінки ризиків без витоку конфіденційної телеметрії.
+- Основний обмін повідомленнями: Асинхронна шина подій (Event Bus), що гарантує строгий контроль зворотного тиску (backpressure) та пріоритет процесора.
+- Клієнтська доставка: Модульні інтерфейси FastAPI (REST) та WebSocket для безпечної інтеграції з клієнтськими системами.
 
-**JARVIS Core** is an autonomous FinTech analytics platform designed to bridge high-throughput quantitative market telemetry with generative artificial intelligence. Built around an asynchronous Event Bus architecture, the platform processes real-time financial market streams, computes multi-factor technical indicators, and delivers actionable insights via an AI copilot.
-
----
-
-## 🏗️ Architecture & AWS Infrastructure
-
-The platform is designed cloud-native for deployment within the **Amazon Web Services (AWS)** ecosystem:
-
-- **Compute & Engine:** Hosted on **AWS EC2** for low-latency data processing and core execution loops.
-- **AI / LLM Orchestration:** Powered by **Amazon Bedrock** (including Anthropic Claude 3.5 Sonnet) for intelligent market synthesis, context analysis, and automated insights.
-- **Core Messaging:** Asynchronous Event Bus architecture handling distributed internal event routing and quantitative pipeline execution.
-- **Client Delivery:** Modular REST and WebSocket interfaces for web consumption and programmatic API interaction.
-
----
-
-## 🏛️ System Architecture & Repository Layout
-
-```text
+🏛️ Архітектура системи та макет репозиторію
 jarvis-core/
 ├── core/                                # Central coordination & dispatching subsystem
 │   ├── main_engine/
@@ -44,12 +30,12 @@ jarvis-core/
 │   │   ├── salience_gate.py             # Signal importance filter
 │   │   └── working_memory.py            # High-speed working memory stack
 │   └── brain_cells/
-│       ├── bed_rock_engine.py           # Amazon Bedrock LLM inference client
+│       ├── bedrock_engine.py            # Amazon Bedrock LLM inference client
 │       ├── hot_context.py               # Hot context cache
 │       ├── intent_router.py             # Intent & command classification
 │       ├── logic_evaluator.py           # Multi-tier decision validator
 │       ├── spatial_router.py            # Network & IO stream routing
-│       ├── trade_validator.py           # Algorithmic trade verification
+│       ├── policy_validator.py          # Algorithmic risk policy verification
 │       └── war_room.py                  # Real-time signal aggregation hub
 │
 ├── security_shield/                     # Security, access control & resource safeguards
@@ -75,18 +61,18 @@ jarvis-core/
 │       ├── atomic_rollback.py           # Safe state rollback engine
 │       └── test_forge.py                # Automated stress testing pipeline
 │
-├── quant_engine/                        # Quantitative analytics & market data execution
+├── quant_engine/                        # Quantitative analytics & telemetry execution
 │   ├── analytics/
 │   │   ├── liquidity_parser.py          # Orderbook depth & liquidity cluster parser
 │   │   ├── macro_monitor.py             # Macroeconomic indicator tracking
 │   │   └── math_indicators.py           # Technical indicators & structural imbalances
 │   ├── execution/
-│   │   ├── order_exec.py                # Order execution and lifecycle logic
-│   │   ├── order_manager.py             # Active order management
-│   │   ├── position_manager.py          # Portfolio & position tracking
+│   │   ├── signal_exec.py               # Quantitative signal routing logic
+│   │   ├── exposure_manager.py          # Active market exposure management
+│   │   ├── position_manager.py          # Institutional portfolio tracking
 │   │   └── risk_manager.py              # Multi-tier risk guard
 │   └── infrastructure/
-│       ├── api_client.py                # Low-latency exchange API client
+│       ├── venue_client.py              # Low-latency market venue client
 │       └── data_engine.py               # Tick buffer & streaming aggregator
 │
 ├── memory/                              # Distributed cognitive & analytical storage
@@ -121,28 +107,18 @@ jarvis-core/
 ├── .gitignore                           # Excluded secrets, binaries & local DBs
 ├── requirements.txt                     # Project dependencies
 └── README.md
-```
 
----
+🛠️ Технологічний стек
+- Основний рушій: Python 3.11+, AsyncIO, FastAPI, WebSockets
+- Хмарна інфраструктура: AWS (Amazon EC2, Amazon Bedrock, Boto3)
+- Гібридна аналітика: DuckDB (стовпчаста in-memory база), ChromaDB (векторна база)
+- Архітектурний шаблон: Асинхронні подієво-керовані мікросервіси із самовідновленням (AST)
 
-## 🛠️ Tech Stack
+📅 Дорожня карта (Roadmap)
+- Фаза 1 (Q3 2026): Архітектура асинхронної шини подій, DuckDB Layer та ядро безпеки AST.
+- Фаза 2 (Q4 2026): Міграція інгесторів на AWS EC2 та інтеграція Amazon Bedrock для синтезу макроризиків.
+- Фаза 3 (Q1 2027): Запуск Private Beta SaaS шлюзу (автентифіковані FastAPI/WebSocket кінцеві точки).
+- Фаза 4 (Q2 2027): Розгортання мультирегіонального кластера (Multi-Region GA) з інституційним SLA.
 
-- **Core Engine:** Python 3.11+, AsyncIO, FastAPI, WebSockets
-- **Cloud Infrastructure:** AWS (Amazon EC2, Amazon Bedrock, CloudWatch, S3)
-- **Quantitative & Data:** NumPy, Pandas, DuckDB, ChromaDB
-- **Architectural Pattern:** Asynchronous Event-Driven Microservices
-
----
-
-## 📅 Roadmap
-
-- [x] **Phase 1 (Q1 2026):** Event bus architecture & asynchronous messaging core.
-- [x] **Phase 2 (Q2 2026):** Quantitative engine and real-time market data ingestion.
-- [ ] **Phase 3 (Q3 2026):** Cloud orchestration on AWS EC2 & Bedrock LLM synthesis.
-- [ ] **Phase 4 (Q4 2026):** Production MVP deployment and API rollout (Target: Dec 2026).
-
----
-
-## 📄 License & Status
-
-Proprietary — In active development by JARVIS Core Team. All rights reserved.
+📄 Ліцензія та статус
+Пропрієтарне програмне забезпечення (Proprietary) — Активно розробляється основною командою JARVIS. B2B інфраструктура (Non-Custodial). Усі права захищено.
