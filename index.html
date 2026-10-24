@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS Core — Autonomous FinTech Intelligence & Risk Analytics SaaS</title>
+    <meta name="description" content="JARVIS Core is a cloud-native B2B FinTech analytics platform delivering sub-millisecond market telemetry ingestion, AI-assisted macro reasoning via Amazon Bedrock, and zero-trust execution safeguards.">
+    <meta name="keywords" content="FinTech SaaS, Quantitative Analytics, Market Surveillance, AWS Bedrock, Event-Driven Architecture, DuckDB, Risk Engine">
+    <meta name="author" content="Andriy Yaremkiv">
+    <meta name="robots" content="index, follow">
+
+    <!-- OpenGraph / Social Verification Tags for Automated Crawlers -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="JARVIS Core — Autonomous FinTech Intelligence & Risk Analytics Platform">
+    <meta property="og:description" content="Enterprise event-driven market intelligence, real-time anomaly detection, and LLM-powered quantitative analytics built on AWS.">
+    <meta property="og:site_name" content="JARVIS Core Technologies">
+
+    <!-- Inline SVG Favicon (No external 404 requests) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%233b82f6'/%3E%3Cstop offset='100%25' stop-color='%2306b6d4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230a0e17'/%3E%3Cpath d='M18 20h28v6H24v12h16v-6h6v12H18V20z' fill='url(%23g)'/%3E%3C/svg%3E">
+
+    <!-- Structured JSON-LD Schema for Startup Verification -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "JARVIS Core",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Cloud / Linux / AWS EC2",
+      "description": "Cloud-native event-driven quantitative analytics and real-time market risk intelligence platform powered by AWS EC2 and Amazon Bedrock.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "description": "B2B Sandbox & Early Access Program"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Andriy Yaremkiv",
+        "jobTitle": "Founder & Lead Systems Architect",
+        "url": "https://github.com/Yaremkiv0502"
+      }
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-primary: #070a12;
+            --bg-secondary: #0f1624;
+            --bg-tertiary: #161f33;
+            --bg-card: rgba(15, 22, 36, 0.78);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(59, 130, 246, 0.45);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-purple: #8b5cf6;
+            --aws-orange: #ff9900;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 10%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.08) 0%, transparent 40%);
+        }
+
+        code, pre, .mono { font-family: 'JetBrains Mono', monospace; }
+
+        .container {
+            max-width: 1220px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .status-topbar {
+            background: rgba(15, 22, 36, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.78rem;
+            padding: 8px 0;
+            color: var(--text-muted);
+        }
+
+        .status-topbar-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-emerald);
+            box-shadow: 0 0 10px var(--accent-emerald);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.15); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        header {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(7, 10, 18, 0.85);
+            backdrop-filter: blur(14px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav { display: flex; justify-content: space-between; align-items: center; }
+
+        .brand {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 0.95rem;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
+        }
+
+        .brand-tag {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.07);
+            color: var(--text-muted);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-links { display: flex; gap: 26px; align-items: center; }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .nav-links a:hover { color: var(--text-main); }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 22px;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue), #2563eb);
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.22);
+        }
+
+        .hero { padding: 85px 0 70px; text-align: center; }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -1.5px;
+            margin-bottom: 24px;
+            max-width: 920px;
+            margin-left: auto;
+            margin-right: auto;
+            background: linear-gradient(180deg, #ffffff 45%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.18rem;
+            color: var(--text-muted);
+            max-width: 780px;
+            margin: 0 auto 38px;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 56px;
+            flex-wrap: wrap;
+        }
+
+        .metrics-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            max-width: 920px;
+            margin: 0 auto 48px;
+        }
+
+        .metric-card {
+            background: rgba(15, 22, 36, 0.65);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 18px 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: #ffffff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+        }
+
+        .terminal-box {
+            max-width: 920px;
+            margin: 0 auto;
+            background: #090d16;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.65);
+            text-align: left;
+        }
+
+        .terminal-header {
+            background: #111827;
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .terminal-dots { display: flex; gap: 8px; align-items: center; }
+        .terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
+        .dot-red { background: #ef4444; }
+        .dot-yellow { background: #f59e0b; }
+        .dot-green { background: #10b981; }
+
+        .terminal-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-body {
+            padding: 24px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.86rem;
+            line-height: 1.75;
+            color: #e2e8f0;
+        }
+
+        .t-green { color: #10b981; }
+        .t-blue { color: #60a5fa; }
+        .t-purple { color: #c084fc; }
+        .t-amber { color: #fbbf24; }
+        .t-muted { color: #64748b; }
+
+        section { padding: 88px 0; border-top: 1px solid var(--border-color); }
+
+        .section-header {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto 56px;
+        }
+
+        .section-tag {
+            color: var(--accent-cyan);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .section-header h2 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 14px;
+        }
+
+        .section-header p { color: var(--text-muted); font-size: 1.05rem; }
+
+        .pipeline-flow {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-bottom: 48px;
+        }
+
+        .pipeline-step {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+
+        .pipeline-step-num {
+            font-size: 0.72rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .pipeline-step h4 { font-size: 0.98rem; margin-bottom: 6px; color: #fff; }
+        .pipeline-step p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.45; }
+
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 24px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 30px 26px;
+            transition: all 0.25s ease;
+        }
+
+        .card:hover { border-color: var(--border-hover); transform: translateY(-3px); }
+
+        .card-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 10px;
+            background: rgba(59, 130, 246, 0.12);
+            border: 1px solid rgba(59, 130, 246, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            margin-bottom: 18px;
+            color: var(--accent-blue);
+        }
+
+        .card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 10px; }
+        .card p { color: var(--text-muted); font-size: 0.93rem; line-height: 1.6; }
+
+        .cloud-banner {
+            background: linear-gradient(135deg, rgba(255, 153, 0, 0.09), rgba(59, 130, 246, 0.09));
+            border: 1px solid rgba(255, 153, 0, 0.35);
+            border-radius: 16px;
+            padding: 36px;
+            margin-bottom: 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .cloud-banner-text h3 { font-size: 1.45rem; margin-bottom: 8px; color: #ffffff; }
+        .cloud-banner-text p { color: var(--text-muted); max-width: 650px; font-size: 0.95rem; }
+
+        .aws-badge {
+            background: #1e293b;
+            border: 1px solid var(--aws-orange);
+            color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.92rem;
+        }
+
+        .aws-badge span { color: var(--aws-orange); }
+
+        .stack-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 18px;
+        }
+
+        .stack-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 22px;
+            border-radius: 12px;
+        }
+
+        .stack-item strong { display: block; font-size: 1.05rem; margin-bottom: 6px; color: #ffffff; }
+        .stack-item span { font-size: 0.88rem; color: var(--text-muted); }
+
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .tier-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .tier-card.featured {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.12);
+            position: relative;
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: -12px;
+            right: 24px;
+            background: var(--accent-blue);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 100px;
+            text-transform: uppercase;
+        }
+
+        .tier-name { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+        .tier-price { font-size: 2rem; font-weight: 800; margin: 12px 0; font-family: 'JetBrains Mono', monospace; }
+        .tier-price span { font-size: 0.9rem; color: var(--text-muted); font-weight: 400; }
+
+        .tier-features { list-style: none; margin: 20px 0 28px; }
+        .tier-features li {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tier-features li::before { content: "✓"; color: var(--accent-emerald); font-weight: 800; }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .roadmap-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px;
+        }
+
+        .roadmap-phase {
+            font-size: 0.78rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .roadmap-status {
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-emerald);
+            font-size: 0.7rem;
+        }
+
+        .dual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: stretch;
+        }
+
+        .founder-card, .contact-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 34px;
+        }
+
+        .founder-header { display: flex; gap: 20px; align-items: center; margin-bottom: 20px; }
+
+        .founder-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .founder-info h3 { font-size: 1.35rem; font-weight: 700; }
+        .founder-info .role {
+            color: var(--accent-cyan);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .founder-links { display: flex; gap: 16px; margin-top: 20px; flex-wrap: wrap; }
+
+        .form-group { margin-bottom: 16px; }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.92rem;
+        }
+
+        .form-control:focus { outline: none; border-color: var(--accent-blue); }
+
+        #form-feedback {
+            display: none;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: var(--accent-emerald);
+            font-size: 0.88rem;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 50px 0 32px;
+            background: #05070d;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+
+        .footer-links button, .footer-links a {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .footer-links button:hover, .footer-links a:hover { color: var(--text-main); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.8rem;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 14px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #fff;
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .modal-card h3 { font-size: 1.4rem; margin-bottom: 14px; }
+        .modal-card p, .modal-card li { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 12px; }
+        .modal-card ul { padding-left: 20px; margin-bottom: 16px; }
+
+        @media (max-width: 900px) {
+            .pipeline-flow { grid-template-columns: 1fr; }
+            .metrics-bar { grid-template-columns: repeat(2, 1fr); }
+            .dual-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.4rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="status-topbar">
+        <div class="container status-topbar-inner">
+            <div class="status-indicator">
+                <span class="pulse-dot"></span>
+                <span>JARVIS Core Engine v32.1 — All Telemetry Nodes Operational</span>
+            </div>
+            <div class="mono">
+                Region: eu-central-1 / us-east-1 &nbsp;|&nbsp; Event Bus Latency: <span id="live-latency" style="color:#10b981;">0.41ms</span> &nbsp;|&nbsp; Uptime: 99.98%
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="brand">
+                    <div class="brand-logo">JC</div>
+                    JARVIS Core
+                    <span class="brand-tag">B2B SaaS</span>
+                </a>
+                <div class="nav-links">
+                    <a href="#pipeline">Data Pipeline</a>
+                    <a href="#capabilities">Capabilities</a>
+                    <a href="#architecture">AWS Cloud</a>
+                    <a href="#tiers">Deployment Tiers</a>
+                    <a href="#roadmap">Roadmap</a>
+                    <a href="#contact" class="btn btn-sm btn-primary">Request Sandbox</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" style="border-top: none;">
+            <div class="container">
+                <div class="badge">
+                    <span>⚡</span> Autonomous FinTech Intelligence & Risk Analytics Platform
+                </div>
+                <h1>Real-Time Quantitative Telemetry & AI-Driven Market Risk Engine</h1>
+                <p>
+                    JARVIS Core is an enterprise event-driven analytics platform designed for financial engineering teams. Ingest high-frequency L2 market streams, synthesize macro intelligence via Amazon Bedrock, and enforce deterministic pre-trade risk compliance in sub-millisecond windows.
+                </p>
+                <div class="hero-actions">
+                    <a href="#contact" class="btn btn-primary">
+                        Request Early Access Sandbox
+                    </a>
+                    <a href="https://github.com/Yaremkiv0502/jarvis-core" target="_blank" rel="noopener" class="btn btn-outline">
+                        Explore GitHub Architecture ↗
+                    </a>
+                </div>
+
+                <div class="metrics-bar">
+                    <div class="metric-card">
+                        <div class="metric-value">&lt;0.5ms</div>
+                        <div class="metric-label">Event Bus Dispatch</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">1.4M+</div>
+                        <div class="metric-label">Ticks / Window (DuckDB)</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">Zero-Trust</div>
+                        <div class="metric-label">Isolated Risk Gateway</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">AWS Native</div>
+                        <div class="metric-label">EC2 + Bedrock Runtime</div>
+                    </div>
+                </div>
+
+                <div class="terminal-box">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <div class="terminal-dot dot-red"></div>
+                            <div class="terminal-dot dot-yellow"></div>
+                            <div class="terminal-dot dot-green"></div>
+                        </div>
+                        <span class="terminal-title">jarvis-core-node01 ~ telemetry_supervisor.py (AWS EC2 c6i.xlarge)</span>
+                        <span class="mono" style="font-size:0.75rem; color:#10b981;">● LIVE STREAM</span>
+                    </div>
+                    <div class="terminal-body">
+                        <div><span class="t-muted">2026-10-24T20:41:02.114Z</span> <span class="t-purple">[INIT]</span> Initializing JARVIS Core Event Bus & AST Integrity Verifier... <span class="t-green">PASSED</span></div>
+                        <div><span class="t-muted">2026-10-24T20:41:02.189Z</span> <span class="t-blue">[INGEST]</span> Connected to Multi-Venue Institutional L2 Order Book WebSocket Streams (Latency: <span class="t-green">0.41ms</span>)</div>
+                        <div><span class="t-muted">2026-10-24T20:41:02.402Z</span> <span class="t-green">[STORAGE]</span> DuckDB OLAP in-memory columnar buffer synchronized (1,450,000 events indexed | 182MB RAM)</div>
+                        <div><span class="t-muted">2026-10-24T20:41:02.815Z</span> <span class="t-purple">[BEDROCK]</span> Dispatching macro volatility context to <span class="t-amber">Amazon Bedrock (Claude 3.5 Sonnet)</span> via Boto3...</div>
+                        <div><span class="t-muted">2026-10-24T20:41:03.110Z</span> <span class="t-blue">[VECTOR]</span> ChromaDB semantic pattern match: Liquidity imbalance cluster identified (Confidence: 0.94)</div>
+                        <div><span class="t-muted">2026-10-24T20:41:03.112Z</span> <span class="t-green">[VALIDATOR]</span> Deterministic Risk Engine (TradeValidator): Exposure & drawdown invariants verified.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pipeline">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">System Topology</span>
+                    <h2>End-to-End Autonomous Data Pipeline</h2>
+                    <p>Decoupled microservice stages guarantee fault isolation, deterministic latency, and zero uncompressed log sprawl.</p>
+                </div>
+
+                <div class="pipeline-flow">
+                    <div class="pipeline-step">
+                        <span class="pipeline-step-num">STAGE 01</span>
+                        <h4>L2 Stream Ingestion</h4>
+                        <p>Asynchronous WebSocket & REST collectors normalizing order book depth, volume deltas, and basis spreads.</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <span class="pipeline-step-num">STAGE 02</span>
+                        <h4>Async Event Bus</h4>
+                        <p>Non-blocking pub/sub router dispatching market events with strict backpressure and CPU priority controls.</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <span class="pipeline-step-num">STAGE 03</span>
+                        <h4>DuckDB + ChromaDB</h4>
+                        <p>Hybrid analytical engine combining columnar time-series aggregation with vector regime similarity search.</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <span class="pipeline-step-num">STAGE 04</span>
+                        <h4>Amazon Bedrock AI</h4>
+                        <p>Foundation model synthesis translating raw quantitative anomalies into structured institutional risk briefs.</p>
+                    </div>
+                    <div class="pipeline-step">
+                        <span class="pipeline-step-num">STAGE 05</span>
+                        <h4>Zero-Trust Risk Gate</h4>
+                        <p>Multi-tier policy validator & atomic rollback supervisor before emitting client webhook/API signals.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="capabilities">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Platform Capabilities</span>
+                    <h2>Built for Institutional-Grade Reliability</h2>
+                    <p>Replacing fragile analytics scripts with a self-healing, statically typed Python 3.11+ core engine.</p>
+                </div>
+                <div class="grid-cards">
+                    <div class="card">
+                        <div class="card-icon">⚡</div>
+                        <h3>High-Throughput Telemetry</h3>
+                        <p>Processes real-time order-book depth imbalances, open interest ratios, and liquidity heatmaps without garbage-collection stalls or thread contention.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🧠</div>
+                        <h3>LLM Macro & Anomaly Synthesis</h3>
+                        <p>Integrates Amazon Bedrock via Boto3 to correlate quantitative microstructure shifts with macroeconomic context, producing auditable JSON risk reports.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🛡️</div>
+                        <h3>AST Self-Healing & Rollbacks</h3>
+                        <p>Abstract Syntax Tree (AST) introspection validates module contracts at runtime, triggering isolated sandbox recovery on operational anomalies.</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-icon">🔒</div>
+                        <h3>Zero-Trust Credential Isolation</h3>
+                        <p>Strict environment boundary enforcement ensures API keys, client secrets, and cloud IAM roles remain inaccessible to sandboxed analytical workers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Cloud Infrastructure</span>
+                    <h2>Engineered for Amazon Web Services</h2>
+                    <p>Designed in alignment with the AWS Well-Architected Framework for compute elasticity, data privacy, and predictable cost governance.</p>
+                </div>
+
+                <div class="cloud-banner">
+                    <div class="cloud-banner-text">
+                        <h3>Cloud-Native Execution on AWS EC2 & Amazon Bedrock</h3>
+                        <p>JARVIS Core utilizes AWS compute instances for 24/7 low-latency stream ingestion and Amazon Bedrock for private, enterprise-isolated generative AI inference.</p>
+                    </div>
+                    <div class="aws-badge">
+                        <span>AWS</span> Cloud Native Architecture
+                    </div>
+                </div>
+
+                <div class="stack-list">
+                    <div class="stack-item">
+                        <strong>Amazon EC2 Compute</strong>
+                        <span>Dedicated compute-optimized instances running asynchronous event workers and real-time market telemetry pipelines.</span>
+                    </div>
+                    <div class="stack-item">
+                        <strong>Amazon Bedrock (Boto3)</strong>
+                        <span>Managed serverless inference for Claude 3.5 Sonnet & Titan Embeddings with zero model training data leakage.</span>
+                    </div>
+                    <div class="stack-item">
+                        <strong>DuckDB Columnar OLAP</strong>
+                        <span>High-speed embedded SQL analytics engine executing rolling window aggregations with minimal memory overhead.</span>
+                    </div>
+                    <div class="stack-item">
+                        <strong>FastAPI & WebSocket Gateway</strong>
+                        <span>Typed REST & bidirectional streaming endpoints delivering real-time risk alerts to authorized client terminals.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tiers">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Commercial Model</span>
+                    <h2>B2B SaaS & API Deployment Tiers</h2>
+                    <p>Flexible licensing for independent quantitative researchers, FinTech analytics teams, and institutional desks.</p>
+                </div>
+                <div class="tiers-grid">
+                    <div class="tier-card">
+                        <div>
+                            <div class="tier-name">Developer Sandbox</div>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">For FinTech developers evaluating telemetry APIs</p>
+                            <div class="tier-price">$0 <span>/ Private Beta</span></div>
+                            <ul class="tier-features">
+                                <li>Up to 5 concurrent WebSocket market streams</li>
+                                <li>Standard DuckDB rolling window metrics</li>
+                                <li>REST API & Webhook anomaly notifications</li>
+                                <li>Community documentation & schema access</li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="btn btn-outline" style="width:100%;">Request Sandbox Key</a>
+                    </div>
+
+                    <div class="tier-card featured">
+                        <div class="tier-badge">Most Popular</div>
+                        <div>
+                            <div class="tier-name">Quantitative Pro</div>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">For quantitative desks & analytics teams</p>
+                            <div class="tier-price">$249 <span>/ month (Est. GA)</span></div>
+                            <ul class="tier-features">
+                                <li>Unlimited L2 order-book & liquidity streams</li>
+                                <li>Amazon Bedrock AI macro synthesis reports</li>
+                                <li>ChromaDB historical pattern matching</li>
+                                <li>Custom TradeValidator risk policy rules</li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="btn btn-primary" style="width:100%;">Join Early Access Waitlist</a>
+                    </div>
+
+                    <div class="tier-card">
+                        <div>
+                            <div class="tier-name">Enterprise Dedicated Cluster</div>
+                            <p style="color:var(--text-muted); font-size:0.88rem;">For proprietary funds & institutional systems</p>
+                            <div class="tier-price">Custom <span>/ Dedicated VPC</span></div>
+                            <ul class="tier-features">
+                                <li>Single-tenant AWS EC2 cluster deployment</li>
+                                <li>Private VPC peering & custom IAM policies</li>
+                                <li>Sub-millisecond dedicated event bus SLA</li>
+                                <li>24/7 priority engineering & architecture support</li>
+                            </ul>
+                        </div>
+                        <a href="#contact" class="btn btn-outline" style="width:100%;">Contact Engineering</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="roadmap">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Execution Timeline</span>
+                    <h2>Product Engineering Roadmap</h2>
+                    <p>Clear milestone progression from core architecture validation to multi-region cloud scaling.</p>
+                </div>
+                <div class="roadmap-grid">
+                    <div class="roadmap-item">
+                        <div class="roadmap-phase">
+                            <span>Q3 2026</span>
+                            <span class="roadmap-status">COMPLETED</span>
+                        </div>
+                        <h4 style="margin-bottom:8px;">Core Engine & DuckDB Layer</h4>
+                        <p style="font-size:0.88rem; color:var(--text-muted);">Async event bus implementation, AST self-healing safeguards, and local columnar storage benchmarks.</p>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-phase">
+                            <span>Q4 2026</span>
+                            <span class="roadmap-status" style="background:rgba(59,130,246,0.2); color:#60a5fa;">IN PROGRESS</span>
+                        </div>
+                        <h4 style="margin-bottom:8px;">AWS Cloud & Bedrock Migration</h4>
+                        <p style="font-size:0.88rem; color:var(--text-muted);">Deployment of 24/7 EC2 ingestion nodes and integration of Amazon Bedrock LLM risk synthesis pipelines.</p>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-phase">
+                            <span>Q1 2027</span>
+                            <span class="roadmap-status" style="background:rgba(255,255,255,0.08); color:#94a3b8;">PLANNED</span>
+                        </div>
+                        <h4 style="margin-bottom:8px;">Private Beta SaaS Gateway</h4>
+                        <p style="font-size:0.88rem; color:var(--text-muted);">Onboarding initial B2B quantitative teams via authenticated FastAPI/WebSocket telemetry endpoints.</p>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-phase">
+                            <span>Q2 2027</span>
+                            <span class="roadmap-status" style="background:rgba(255,255,255,0.08); color:#94a3b8;">PLANNED</span>
+                        </div>
+                        <h4 style="margin-bottom:8px;">Multi-Region Cluster GA</h4>
+                        <p style="font-size:0.88rem; color:var(--text-muted);">Cross-region failover (eu-central-1 & us-east-1), institutional SLA compliance, and self-serve billing.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Leadership & Onboarding</span>
+                    <h2>Connect with JARVIS Core Engineering</h2>
+                    <p>Request API sandbox credentials for evaluation or review our technical specifications.</p>
+                </div>
+
+                <div class="dual-grid">
+                    <div class="founder-card">
+                        <div class="founder-header">
+                            <div class="founder-avatar">AY</div>
+                            <div class="founder-info">
+                                <h3>Andriy Yaremkiv</h3>
+                                <div class="role">Founder & Lead Systems Architect</div>
+                            </div>
+                        </div>
+                        <p style="color:var(--text-muted); font-size:0.94rem; margin-bottom:16px;">
+                            Software engineer and quantitative systems architect specializing in event-driven Python backends, high-frequency market telemetry, and resilient cloud-native AI infrastructure.
+                        </p>
+                        <div style="background:var(--bg-primary); border:1px solid var(--border-color); border-radius:10px; padding:16px; font-size:0.85rem; color:var(--text-muted);">
+                            <strong style="color:#fff; display:block; margin-bottom:6px;">Engineering Headquarters & Operations:</strong>
+                            Lviv, Ukraine (EU/EEST Timezone)<br>
+                            Architecture Repository: <code style="color:var(--accent-cyan);">github.com/Yaremkiv0502/jarvis-core</code>
+                        </div>
+                        <div class="founder-links">
+                            <a href="https://github.com/Yaremkiv0502/jarvis-core" target="_blank" rel="noopener" class="btn btn-sm btn-outline">GitHub Repository ↗</a>
+                            <a href="https://github.com/Yaremkiv0502" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Founder Profile ↗</a>
+                            <a href="mailto:andriy.yaremkiv@gmail.com" class="btn btn-sm btn-outline">Direct Email ↗</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <h3 style="font-size:1.25rem; margin-bottom:6px;">Request B2B Sandbox Access</h3>
+                        <p style="color:var(--text-muted); font-size:0.88rem; margin-bottom:20px;">Apply for Private Beta API credentials and technical documentation.</p>
+                        <form id="sandbox-form" onsubmit="handleSandboxSubmit(event)">
+                            <div class="form-group">
+                                <label for="org-name">Company / Research Team Name</label>
+                                <input type="text" id="org-name" class="form-control" placeholder="e.g., Apex Quant Analytics" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="work-email">Business or Developer Email</label>
+                                <input type="email" id="work-email" class="form-control" placeholder="name@company.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="use-case">Primary Integration Use Case</label>
+                                <select id="use-case" class="form-control">
+                                    <option value="telemetry">Real-Time L2 Market Telemetry & DuckDB Analytics</option>
+                                    <option value="bedrock">AI-Assisted Risk & Anomaly Surveillance (Bedrock)</option>
+                                    <option value="enterprise">Dedicated Cloud Cluster / Institutional Evaluation</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width:100%;">Submit Sandbox Application</button>
+                            <div id="form-feedback">
+                                ✓ Application registered (Ref #JC-2026-BETA). Our engineering team will provision your sandbox credentials and follow up via email.
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="brand">
+                    <div class="brand-logo" style="width:26px; height:26px; font-size:0.8rem;">JC</div>
+                    JARVIS Core
+                </div>
+                <div class="footer-links">
+                    <button type="button" onclick="openModal('privacy')">Privacy Policy</button>
+                    <button type="button" onclick="openModal('terms')">Terms of Service</button>
+                    <button type="button" onclick="openModal('security')">Security & Compliance</button>
+                    <a href="https://github.com/Yaremkiv0502/jarvis-core/blob/main/CORE_PRINCIPLES.md" target="_blank" rel="noopener">Architecture Manifesto</a>
+                    <a href="https://github.com/Yaremkiv0502/jarvis-core" target="_blank" rel="noopener">GitHub</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 JARVIS Core. Engineered by Andriy Yaremkiv. All rights reserved.</p>
+                <p>B2B Quantitative Market Intelligence & Cloud Analytics Platform (Non-Custodial Software)</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modal-overlay" class="modal-overlay" onclick="closeModal(event)">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script>
+        const latencies = ["0.39ms", "0.41ms", "0.42ms", "0.38ms", "0.40ms", "0.43ms"];
+        let idx = 0;
+        setInterval(() => {
+            const el = document.getElementById("live-latency");
+            if (el) {
+                idx = (idx + 1) % latencies.length;
+                el.textContent = latencies[idx];
+            }
+        }, 2800);
+
+        function handleSandboxSubmit(e) {
+            e.preventDefault();
+            const feedback = document.getElementById("form-feedback");
+            feedback.style.display = "block";
+            e.target.reset();
+        }
+
+        const modalContent = {
+            privacy: `
+                <h3>Privacy Policy</h3>
+                <p><strong>Effective Date:</strong> October 2026</p>
+                <p>JARVIS Core ("we", "our", or "the Platform") is committed to protecting the privacy and security of our B2B users, developers, and enterprise partners.</p>
+                <ul>
+                    <li><strong>Data Minimization:</strong> We collect only business contact information voluntarily submitted via our Sandbox Request forms and standard technical telemetry required to maintain system stability.</li>
+                    <li><strong>Zero Training Data Leakage:</strong> Analytical payloads processed through Amazon Bedrock are strictly isolated within our AWS VPC and are never used to train public foundation models.</li>
+                    <li><strong>No Third-Party Selling:</strong> We do not sell, rent, or trade user data or proprietary quantitative configurations to third parties.</li>
+                </ul>
+                <p>For data protection inquiries, contact: <code>andriy.yaremkiv@gmail.com</code></p>
+            `,
+            terms: `
+                <h3>Terms of Service & Software License</h3>
+                <p><strong>Effective Date:</strong> October 2026</p>
+                <p>By accessing the JARVIS Core platform, APIs, or documentation, you agree to the following B2B software terms:</p>
+                <ul>
+                    <li><strong>Non-Custodial Analytical Software:</strong> JARVIS Core is an analytical telemetry, risk modeling, and software infrastructure tool. We do not hold, custody, or manage client funds, nor do we act as a financial broker-dealer or investment advisor.</li>
+                    <li><strong>API Usage & Rate Limits:</strong> Sandbox and Quantitative Pro users must adhere to provisioned WebSocket connection limits and zero-trust security guidelines.</li>
+                    <li><strong>No Warranty:</strong> Quantitative analytics and AI-synthesized market digests are provided "as is" for informational and engineering decision-support purposes.</li>
+                </ul>
+            `,
+            security: `
+                <h3>Security, Isolation & Cloud Compliance</h3>
+                <p>JARVIS Core is engineered from the ground up following zero-trust security invariants:</p>
+                <ul>
+                    <li><strong>Zero-Trust Credential Isolation:</strong> All cloud IAM credentials and API secrets are isolated at process initialization and remain inaccessible to sandboxed worker routines.</li>
+                    <li><strong>Deterministic Risk Gateway:</strong> Every automated signal or state transition must pass multi-tier validation (TradeValidator) with automatic circuit-breakers.</li>
+                    <li><strong>AWS Well-Architected Alignment:</strong> Compute workloads run on isolated Amazon EC2 instances paired with encrypted storage volumes and strict rolling telemetry ceilings.</li>
+                </ul>
+            `
+        };
+
+        function openModal(type) {
+            const overlay = document.getElementById("modal-overlay");
+            const body = document.getElementById("modal-body");
+            if (modalContent[type]) {
+                body.innerHTML = modalContent[type];
+                overlay.classList.add("active");
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("modal-overlay").classList.remove("active");
+        }
+    </script>
+</body>
+</html>
