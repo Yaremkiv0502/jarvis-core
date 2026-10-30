@@ -1,0 +1,48 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python Virtual Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Do NOT ignore the example env file!
+!.env.example
+
+# Logs and Databases (AegisCore protection)
+*.log
+logs/
+*.sqlite
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+*.db
+*.db-shm
+*.db-wal
+
+# JARVIS Core specific data & memory vaults
+memory/storage/chroma_vault/
+memory/wings/identity/intruders/
+temp_recovery/
+evolution/evolution_vault.db
+evolution/project_map.json
+backups/
+
+# Distribution / packaging / OS generated
+build/
+dist/
+*.egg-info/
+.DS_Store
+Thumbs.db
+
+# IDEs / Editors
+.idea/
+.vscode/
+*.swp
+*.swo
