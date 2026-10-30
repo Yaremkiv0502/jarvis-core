@@ -26,6 +26,12 @@ logs/
 *.db-shm
 *.db-wal
 
+# Testing & Coverage (TestForge / Axioms Shield)
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
 # JARVIS Core specific data & memory vaults
 memory/storage/chroma_vault/
 memory/wings/identity/intruders/
