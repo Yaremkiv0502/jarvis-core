@@ -1,124 +1,107 @@
-# JARVIS Core — Автономна платформа кількісної аналітики та ризиків
+# JARVIS Core — Autonomous Self-Healing Infrastructure & Enterprise AIOps Platform
 
 📌 Огляд
-JARVIS Core — це хмарна B2B платформа кількісної аналітики, розроблена для поєднання високопродуктивної ринкової телеметрії з генеративним штучним інтелектом. Побудована на основі асинхронної архітектури шини подій, платформа обробляє фінансові потоки в режимі реального часу, обчислює структурні індикатори та надає аудиторські звіти за допомогою інтегрованих LLM.
+JARVIS Core — це хмарна B2B платформа автономної інфраструктури (AIOps) та кіберзахисту. Розроблена для інженерних команд і DevSecOps-відділів, система поєднує пропріоцептивну телеметрію з генеративним штучним інтелектом. Побудована навколо мікроядерної архітектури на 49 вузлів, платформа в реальному часі аналізує «програмне тертя», автоматично синтезує та тестує код через AST (Abstract Syntax Tree), а також забезпечує шестирівневий захист нульової довіри (Zero-Trust) на базі Microsoft Azure.
 
-🏗️ Архітектура та інфраструктура AWS
-Платформа розроблена відповідно до AWS Well-Architected Framework для розгортання в екосистемі Amazon Web Services:
-- Обчислення та механізм: Розміщено на AWS EC2 для потокової обробки даних із низькою затримкою та роботи асинхронного ядра.
-- AI-Оркестрація та LLM: Працює на базі Amazon Bedrock (Claude 3.5 Sonnet) для інтелектуального синтезу макроданих та автоматизованої оцінки ризиків без витоку конфіденційної телеметрії.
-- Основний обмін повідомленнями: Асинхронна шина подій (Event Bus), що гарантує строгий контроль зворотного тиску (backpressure) та пріоритет процесора.
-- Клієнтська доставка: Модульні інтерфейси FastAPI (REST) та WebSocket для безпечної інтеграції з клієнтськими системами.
+🏗️ Архітектура та інфраструктура Microsoft Azure
+Платформа спроєктована за стандартами Microsoft Azure Well-Architected Framework для забезпечення надійності, передбачуваності витрат та безпеки:
+- **Дворівнева AI-Оркестрація:** Працює на базі **Azure OpenAI Service**. Важкий контур `GPT-4o` відповідає за двофазне планування (Chain-of-Thought) та хірургію коду, а швидкісний `GPT-4.1-mini` маршрутизує інтенції та кристалізує спогади.
+- **Обчислення та механізм:** Розміщено на **Azure Virtual Machines / AKS (Linux)** для ізольованого виконання асинхронного ядра та векторного сховища ChromaDB.
+- **Пропріоцептивна шина подій:** IPC-магістраль (порт 49152), що гарантує диспетчеризацію менше ніж за 250 мс та відсікає апаратне чи асинхронне голодування (`Async Starvation`).
+- **Клієнтська доставка:** Модульні інтерфейси FastAPI та WebSocket з підтримкою голографічного веб-інтерфейсу (WarRoom) для затвердження інженерних мутацій (Human-in-the-Loop).
 
 🏛️ Архітектура системи та макет репозиторію
 jarvis-core/
 ├── core/                                # Central coordination & dispatching subsystem
 │   ├── main_engine/
-│   │   ├── blackbox_wal.py              # Write-Ahead Logging engine
 │   │   ├── boot_sequence.py             # System bootstrap & integrity verification
-│   │   ├── dynamic_loader.py            # Dynamic module loader
+│   │   ├── dynamic_loader.py            # Dynamic hot-reloading module watchdog
 │   │   ├── entrypoint.py                # Main application entry point
-│   │   ├── event_bus.py                 # Asynchronous high-throughput event bus
-│   │   ├── memory_bridge.py             # Working memory to persistent storage bridge
-│   │   ├── state_machine.py             # Finite state machine
+│   │   ├── event_bus.py                 # Asynchronous high-throughput IPC bus
+│   │   ├── memory_bridge.py             # Working memory to SQLite persistent bridge
+│   │   ├── state_machine.py             # System finite state machine
 │   │   └── time_syncer.py               # Precision tick synchronization
 │   ├── cognitive/
 │   │   ├── cognitive_stream.py          # Real-time context coordination
 │   │   ├── ego_anchor.py                # System invariants & priority enforcement
 │   │   ├── habit_engine.py              # Automated operational routines
-│   │   ├── inner_observer.py            # System coherence & health monitor
 │   │   ├── salience_gate.py             # Signal importance filter
 │   │   └── working_memory.py            # High-speed working memory stack
 │   └── brain_cells/
-│       ├── bedrock_engine.py            # Amazon Bedrock LLM inference client
-│       ├── hot_context.py               # Hot context cache
-│       ├── intent_router.py             # Intent & command classification
+│       ├── gemini_engine.py             # Azure OpenAI Dual-Pipeline Controller (GPT-4o / GPT-4.1-mini)
+│       ├── hot_context.py               # LTM to STM Hot context cache
+│       ├── intent_router.py             # Semantic intent & visual command classification
 │       ├── logic_evaluator.py           # Multi-tier decision validator
-│       ├── spatial_router.py            # Network & IO stream routing
-│       ├── policy_validator.py          # Algorithmic risk policy verification
-│       └── war_room.py                  # Real-time signal aggregation hub
+│       └── spatial_router.py            # Network & memory routing
 │
-├── security_shield/                     # Security, access control & resource safeguards
+├── security_shield/                     # 6-Tier AegisCore & resource safeguards
 │   ├── aegis/
 │   │   ├── aegis_core.py                # Endpoint protection core
-│   │   ├── file_monitor.py              # File system integrity auditing
-│   │   ├── net_firewall.py              # Outbound connection monitoring
-│   │   └── process_guard.py             # Process integrity guard
+│   │   ├── file_monitor.py              # FIM (File Integrity Monitoring)
+│   │   ├── ransomware_lock.py           # SQLite WAL protection engine
+│   │   └── process_guard.py             # Process integrity & heartbeat guard
 │   ├── atomic_writer.py                 # Transactional atomic configuration writer
-│   ├── axioms.py                        # Immutable security & operational axioms
+│   ├── axioms.py                        # 24 Immutable structural code axioms
 │   ├── disk_warden.py                   # Storage space & quota manager
-│   ├── env_loader.py                    # Secure environment configuration loader
-│   └── identity_check.py                # Cryptographic signature & access verification
+│   ├── env_loader.py                    # Secure zero-trust credential loader
+│   └── identity_check.py                # Biometric & cryptographic access verification
 │
-├── evolution/                           # Sandboxed execution & self-inspection lab
+├── evolution/                           # AST Surgery & autonomous self-healing lab
 │   ├── auto_forge.py                    # Analytical module generator
-│   ├── bottleneck_profiler.py           # Latency & performance profiler
-│   ├── reflection_engine.py             # Historical execution evaluation
+│   ├── bottleneck_profiler.py           # Latency & async starvation profiler
+│   ├── reflection_engine.py             # Historical error evaluation & reflection
 │   ├── quarantine/
-│   │   └── sandbox_env.py               # Isolated runtime for module testing
+│   │   └── sandbox_env.py               # Isolated runtime for AST-patched code testing
 │   └── sandbox/
-│       ├── ast_surgeon.py               # Abstract syntax tree static analysis
-│       ├── atomic_rollback.py           # Safe state rollback engine
-│       └── test_forge.py                # Automated stress testing pipeline
+│       ├── ast_surgeon.py               # Abstract syntax tree surgical analyzer
+│       ├── atomic_rollback.py           # Instant state rollback engine
+│       └── test_forge.py                # Automated axiom stress testing pipeline
 │
-├── quant_engine/                        # Quantitative analytics & telemetry execution
-│   ├── analytics/
-│   │   ├── liquidity_parser.py          # Orderbook depth & liquidity cluster parser
-│   │   ├── macro_monitor.py             # Macroeconomic indicator tracking
-│   │   └── math_indicators.py           # Technical indicators & structural imbalances
-│   ├── execution/
-│   │   ├── signal_exec.py               # Quantitative signal routing logic
-│   │   ├── exposure_manager.py          # Active market exposure management
-│   │   ├── position_manager.py          # Institutional portfolio tracking
-│   │   └── risk_manager.py              # Multi-tier risk guard
-│   └── infrastructure/
-│       ├── venue_client.py              # Low-latency market venue client
-│       └── data_engine.py               # Tick buffer & streaming aggregator
-│
-├── memory/                              # Distributed cognitive & analytical storage
+├── memory/                              # Distributed cognitive & RAG storage
 │   ├── palace_engine/
-│   │   ├── compressor.py                # Context vector compression
-│   │   └── hybrid_search.py             # Hybrid vector & full-text search
+│   │   ├── compressor.py                # AAAK Chronological Context compression
+│   │   └── hybrid_search.py             # Hybrid vector & lexical RAG search
 │   ├── storage/
 │   │   └── chroma_vault/                # Vector storage (ChromaDB)
 │   └── wings/
-│       ├── chronos_warden.py            # Multi-timeframe time-series manager
-│       ├── electra_analytics.duckdb     # Embedded analytical database (DuckDB)
-│       └── ltm_core.py                  # Long-term pattern memory
+│       ├── chronos_warden.py            # Temporal synchronization manager
+│       ├── ltm_core.py                  # SQLite Long-term pattern memory
+│       └── biometry.py                  # Identity contextual integration
 │
-├── sensory/                             # Input streams & telemetry collectors
+├── sensory/                             # Input streams & proprioceptive collectors
 │   ├── speech/
-│   │   ├── acoustic_controller.py       # Audio capture controller
-│   │   ├── audio_processor.py           # Digital signal filtering
-│   │   └── speech_synth.py              # Operator voice telemetry synthesis
+│   │   ├── acoustic_controller.py       # Audio capture & ducking controller
+│   │   ├── speech_decoder.py            # Groq LPU Whisper transcription
+│   │   └── speech_synth.py              # Edge-TTS neural voice synthesis
 │   └── telemetry/
-│       ├── desktop_observer.py          # Host environment telemetry
-│       └── presence_sensor.py           # Operator presence detection
+│       ├── desktop_observer.py          # Host environment & visual screenshot telemetry
+│       ├── face_id.py                   # InsightFace CPU biometric detector
+│       └── vital_monitor.py             # CPU, RAM & EventBus friction monitor
 │
-├── web/                                 # Operator Holographic HUD interface
+├── web/                                 # Operator Holographic WebHUD (WarRoom)
 │   ├── css/
 │   │   └── hud.css                      # Telemetry dashboard styles
 │   ├── js/
 │   │   ├── core_api.js                  # WebSocket client for real-time telemetry
 │   │   └── telemetry_canvas.js          # Interactive data canvas
-│   └── index.html                       # Operator dashboard entry
+│   └── index.html                       # Engineering WebHUD entry point
 │
 ├── .env.example                         # Environment configuration template
 ├── .gitignore                           # Excluded secrets, binaries & local DBs
-├── requirements.txt                     # Project dependencies
+├── requirements.txt                     # Project dependencies (Azure-Native)
 └── README.md
 
 🛠️ Технологічний стек
 - Основний рушій: Python 3.11+, AsyncIO, FastAPI, WebSockets
-- Хмарна інфраструктура: AWS (Amazon EC2, Amazon Bedrock, Boto3)
-- Гібридна аналітика: DuckDB (стовпчаста in-memory база), ChromaDB (векторна база)
-- Архітектурний шаблон: Асинхронні подієво-керовані мікросервіси із самовідновленням (AST)
+- Хмарна інфраструктура та AI: Microsoft Azure (Azure OpenAI, Azure VMs/AKS)
+- Гібридна база знань: ChromaDB (векторний RAG), SQLite WAL (структурований довгостроковий архів)
+- Архітектурний шаблон: Асинхронні мікросервіси із самовідновленням коду через AST та 24 аксіоми безпеки.
 
 📅 Дорожня карта (Roadmap)
-- Фаза 1 (Q3 2026): Архітектура асинхронної шини подій, DuckDB Layer та ядро безпеки AST.
-- Фаза 2 (Q4 2026): Міграція інгесторів на AWS EC2 та інтеграція Amazon Bedrock для синтезу макроризиків.
-- Фаза 3 (Q1 2027): Запуск Private Beta SaaS шлюзу (автентифіковані FastAPI/WebSocket кінцеві точки).
-- Фаза 4 (Q2 2027): Розгортання мультирегіонального кластера (Multi-Region GA) з інституційним SLA.
+- Фаза 1 (Q3 2026): Архітектура мікроядра на 49 вузлів, шина подій IPC та 6-рівневий щит AegisCore [ЗАВЕРШЕНО].
+- Фаза 2 (Q4 2026): Міграція конвеєра мутацій та синтезу на Microsoft Azure OpenAI (GPT-4o та GPT-4.1-mini) [В ПРОЦЕСІ].
+- Фаза 3 (Q1 2027): Запуск багатокористувацького B2B SaaS шлюзу з вебхуками для GitHub Actions та Azure DevOps CI/CD.
+- Фаза 4 (Q2 2027): Розгортання мультирегіонального кластера Azure (swedencentral та westeurope) з лістингом в Azure Marketplace.
 
 📄 Ліцензія та статус
-Пропрієтарне програмне забезпечення (Proprietary) — Активно розробляється основною командою JARVIS. B2B інфраструктура (Non-Custodial). Усі права захищено.
+Пропрієтарне B2B програмне забезпечення (Proprietary). Активно розробляється для інженерних команд. Усі права захищено.
