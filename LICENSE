@@ -1,0 +1,35 @@
+JARVIS CORE PROPRIETARY SOFTWARE LICENSE & EVALUATION AGREEMENT
+
+Copyright (c) 2026 JARVIS Core Technologies. All rights reserved.
+Author & Lead Systems Architect: Andriy Yaremkiv (github.com/Yaremkiv0502).
+
+IMPORTANT — READ CAREFULLY:
+This Proprietary Software License Agreement ("Agreement") is a legal agreement between you (either an individual developer or a business entity) and JARVIS Core Technologies ("Licensor").
+
+1. PROPRIETARY RIGHTS & OWNERSHIP
+The JARVIS Core software infrastructure, including but not limited to the micro-kernel architecture, Abstract Syntax Tree (AST) surgery engines, proprioceptive telemetry algorithms, AegisCore security frameworks, schemas, documentation, and source code (collectively, the "Software"), is the intellectual property of Andriy Yaremkiv and is protected by international copyright laws, trade secret protections, and intellectual property treaties. All rights not expressly granted to you are reserved by the Licensor.
+
+2. EVALUATION & SANDBOX ACCESS ONLY
+Access to this repository is granted strictly for inspection, architectural review, and non-production testing ("Evaluation Purposes"):
+- You may review the codebase, documentation, and interface specifications for the sole purpose of evaluating integration with your enterprise cloud systems or assessing potential commercial engagement.
+- No commercial deployment, redistribution, production execution, or incorporation into third-party commercial services is permitted under this license without a signed Master Services Agreement (MSA) or Enterprise B2B Subscription with the Licensor.
+
+3. RESTRICTIONS
+You shall not, and shall not permit any third party to:
+a) Sublicense, sell, lease, rent, distribute, host as a managed service, or commercially exploit any portion of the Software;
+b) Reverse-engineer, decompile, disassemble, or derive the mathematical weights, heuristics, or underlying architecture of proprietary autonomous nodes;
+c) Modify, adapt, or create derivative works of the Software without prior express written authorization from the Licensor;
+d) Remove, alter, or obscure any copyright, trademark, or proprietary notices contained in or on the Software;
+e) Use the Software to benchmark performance against competing enterprise AIOps platforms for public disclosure without express consent.
+
+4. CONFIDENTIALITY & DATA INTEGRITY
+All proprietary algorithms, AST security axioms, telemetry protocols, and architectural designs disclosed within this Software represent valuable trade secrets. The recipient agrees to maintain reasonable security safeguards to prevent unauthorized duplication or disclosure.
+
+5. DISCLAIMER OF WARRANTIES
+THE SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE SOFTWARE.
+
+6. CONTACT & LICENSING INQUIRIES
+For commercial licensing, enterprise VNet deployment terms, or partnership inquiries, contact:
+Andriy Yaremkiv
+Email: andriy.yaremkiv@gmail.com
+Repository: https://github.com/Yaremkiv0502/jarvis-core
