@@ -1,16 +1,25 @@
 # JARVIS Core — Autonomous Self-Healing Infrastructure & Enterprise AIOps Platform
 
-📌 Огляд
-JARVIS Core — це хмарна B2B платформа автономної інфраструктури (AIOps) та кіберзахисту. Розроблена для інженерних команд і DevSecOps-відділів, система поєднує пропріоцептивну телеметрію з генеративним штучним інтелектом. Побудована навколо мікроядерної архітектури на 49 вузлів, платформа в реальному часі аналізує «програмне тертя», автоматично синтезує та тестує код через AST (Abstract Syntax Tree), а також забезпечує шестирівневий захист нульової довіри (Zero-Trust) на базі Microsoft Azure.
+## 📌 Overview
+JARVIS Core is a cloud-native B2B autonomous infrastructure (AIOps) and cyber-resilience platform. Engineered for enterprise engineering teams and DevSecOps departments, the platform unites proprioceptive telemetry with generative AI. Built around an asynchronous 49-node microkernel architecture, the system performs real-time execution friction analysis, autonomous patch synthesis and verification via AST (Abstract Syntax Tree), and 6-tier Zero-Trust runtime protection powered by Microsoft Azure.
 
-🏗️ Архітектура та інфраструктура Microsoft Azure
-Платформа спроєктована за стандартами Microsoft Azure Well-Architected Framework для забезпечення надійності, передбачуваності витрат та безпеки:
-- **Дворівнева AI-Оркестрація:** Працює на базі **Azure OpenAI Service**. Важкий контур `GPT-4o` відповідає за двофазне планування (Chain-of-Thought) та хірургію коду, а швидкісний `GPT-4.1-mini` маршрутизує інтенції та кристалізує спогади.
-- **Обчислення та механізм:** Розміщено на **Azure Virtual Machines / AKS (Linux)** для ізольованого виконання асинхронного ядра та векторного сховища ChromaDB.
-- **Пропріоцептивна шина подій:** IPC-магістраль (порт 49152), що гарантує диспетчеризацію менше ніж за 250 мс та відсікає апаратне чи асинхронне голодування (`Async Starvation`).
-- **Клієнтська доставка:** Модульні інтерфейси FastAPI та WebSocket з підтримкою голографічного веб-інтерфейсу (WarRoom) для затвердження інженерних мутацій (Human-in-the-Loop).
+## 📺 Live Demo Walkthrough
 
-🏛️ Архітектура системи та макет репозиторію
+[![Watch JARVIS Core Demo](https://img.youtube.com/vi/DxVsB2mJfKs/maxresdefault.jpg)](https://youtu.be/DxVsB2mJfKs)
+
+> 🔗 **Watch on YouTube:** [JARVIS Core — Autonomous Code Mutation & Zero-Downtime Hot-Swap Demo](https://youtu.be/DxVsB2mJfKs)  
+> *Demonstrating live stack-trace capture, AST patch synthesis, automated validation against 24 safety axioms, human-in-the-loop authorization, and zero-downtime hot-swapping.*
+
+## 🏗️ Architecture & Microsoft Azure Infrastructure
+Engineered strictly in accordance with the Microsoft Azure Well-Architected Framework to ensure reliability, cost predictability, and zero-trust security:
+- **Dual-Tier AI Orchestration:** Powered by **Azure OpenAI Service**. The heavy cognitive tier (`GPT-4o`) executes two-phase Chain-of-Thought planning and AST patch surgery; the low-latency tier (`GPT-4o-mini`) handles real-time intent routing and memory crystallization.
+- **Compute & Core Runtime:** Hosted on **Azure Virtual Machines / AKS (Linux)** for isolated execution of the asynchronous microkernel and ChromaDB vector store.
+- **Proprioceptive Event Bus:** Asynchronous IPC pipeline (port 49152) guaranteeing sub-250ms dispatching and preventing hardware or asynchronous thread starvation (`Async Starvation`).
+- **Client Delivery & Control:** Modular FastAPI and WebSocket interfaces integrated with a holographic engineering dashboard (WarRoom) for Human-in-the-Loop mutation approval.
+
+## 🏛️ System Architecture & Repository Layout
+
+```text
 jarvis-core/
 ├── core/                                # Central coordination & dispatching subsystem
 │   ├── main_engine/
@@ -28,7 +37,7 @@ jarvis-core/
 │   │   ├── salience_gate.py             # Signal importance filter
 │   │   └── working_memory.py            # High-speed working memory stack
 │   └── brain_cells/
-│       ├── gemini_engine.py             # Azure OpenAI Dual-Pipeline Controller (GPT-4o / GPT-4.1-mini)
+│       ├── gemini_engine.py             # Azure OpenAI Dual-Pipeline Controller (GPT-4o / GPT-4o-mini)
 │       ├── hot_context.py               # LTM to STM Hot context cache
 │       ├── intent_router.py             # Semantic intent & visual command classification
 │       ├── logic_evaluator.py           # Multi-tier decision validator
@@ -90,18 +99,23 @@ jarvis-core/
 ├── .gitignore                           # Excluded secrets, binaries & local DBs
 ├── requirements.txt                     # Project dependencies (Azure-Native)
 └── README.md
+🛠️ Technology Stack
+Core Engine: Python 3.11+, AsyncIO, FastAPI, WebSockets
 
-🛠️ Технологічний стек
-- Основний рушій: Python 3.11+, AsyncIO, FastAPI, WebSockets
-- Хмарна інфраструктура та AI: Microsoft Azure (Azure OpenAI, Azure VMs/AKS)
-- Гібридна база знань: ChromaDB (векторний RAG), SQLite WAL (структурований довгостроковий архів)
-- Архітектурний шаблон: Асинхронні мікросервіси із самовідновленням коду через AST та 24 аксіоми безпеки.
+Cloud Infrastructure & AI: Microsoft Azure (Azure OpenAI Service, Azure VMs / AKS)
 
-📅 Дорожня карта (Roadmap)
-- Фаза 1 (Q3 2026): Архітектура мікроядра на 49 вузлів, шина подій IPC та 6-рівневий щит AegisCore [ЗАВЕРШЕНО].
-- Фаза 2 (Q4 2026): Міграція конвеєра мутацій та синтезу на Microsoft Azure OpenAI (GPT-4o та GPT-4.1-mini) [В ПРОЦЕСІ].
-- Фаза 3 (Q1 2027): Запуск багатокористувацького B2B SaaS шлюзу з вебхуками для GitHub Actions та Azure DevOps CI/CD.
-- Фаза 4 (Q2 2027): Розгортання мультирегіонального кластера Azure (swedencentral та westeurope) з лістингом в Azure Marketplace.
+Hybrid Knowledge Base: ChromaDB (Vector RAG), SQLite WAL (Structured long-term persistence)
 
-📄 Ліцензія та статус
-Пропрієтарне B2B програмне забезпечення (Proprietary). Активно розробляється для інженерних команд. Усі права захищено.
+Architectural Paradigm: Autonomous self-healing microservices via AST mutation and 24 immutable safety axioms
+
+📅 Roadmap
+Phase 1 (Q3 2026): 49-Node microkernel architecture, high-throughput IPC bus, and 6-tier AegisCore shield [COMPLETED]
+
+Phase 2 (Q4 2026): Migration of mutation pipeline to Microsoft Azure OpenAI (GPT-4o & GPT-4o-mini) [IN PROGRESS]
+
+Phase 3 (Q1 2027): Multi-tenant B2B SaaS gateway with native GitHub Actions & Azure DevOps CI/CD webhooks
+
+Phase 4 (Q2 2027): Multi-region Azure deployment (swedencentral & westeurope) and Microsoft Azure Marketplace listing
+
+📄 License & Commercial Status
+Proprietary B2B Software. Actively maintained and developed for enterprise engineering operations. All rights reserved.
